@@ -1,125 +1,66 @@
-import React, {Component} from "react"
-import ReactDOM from "react-dom"
-
-// import {Firts} from "component/first"
-console.log("wtf");
-
-import {foot} from "./component/x"
-
-console.log(foot());
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 
-var keySet = new Set()
+//import { foot } from "./component/x"
+//import signin from './images/test.jpg'
 
-const parse = json => {
-  return Object.keys(json).map(key => {
-    if(json[key] instanceof Object) return parse(json[key])
-    else if(json[key] != "" && !keySet.has(key)) {
-      keySet.add(key)
-      return <tr><td>{key}</td><td>{json[key]}</td></tr>
-    }
-  })
-}
+import Navbar from "./component/Navbar";
+import Home from "./component/Home";
+import Register from "./component/Register";
+import { Provider } from 'react-redux'
+import { ReactReduxContext } from 'react-redux'
+import "./css/Home.css";
+import "./css/Navbar.css";
 
-// class App extends Component {
-//   //parse(json)
-//
-//   render() {
-//
-//
-//     return (
-//         <table>
-//           <tr>
-//             <th>Property</th>
-//             <th>Value</th>
-//           </tr>
-//             {parse(json.receivedOrder)}
-//
-//         </table>
-//
-//     );
-//   }
-//
-//
-// };
+    
 
-//export default App;
-//ReactDOM.render(<App />, document.getElementById("app"));
 
-/** functions **/
-const foo = user => user? `${user.name} ${user.lastName}` : "Stranger"
+const axios = require('axios');
+//  var homeImg = document.getElementById('background');
+//  homeImg.src = signin;
 
-/** vars **/
-const user = {
-  name : "Illya",
-  lastName : "Koshkin"
-}
+const request = {
+    url: 'http://localhost:8080/test',
+    method: 'GET'
+};
 
-/** components */
+axios(request)
+    .then(response => {
+        console.log(response);
+    });
 
-/* NOTES:
-  just like vue.js multiline template should be wrapped into wraping tag
-  since the syntax is so ugly wrap the whole clusterfuck into a ()
-*/
-const element = (
-  <div>
-    <h1>Hello {foo(user)}!</h1>
-    <div>What a lame way to programm</div>
-  </div>
-)
+class App extends Component {
 
-const element2 = {
-  type : "h1",
-  props : {
-    className : 'greeting',
-    children: 'Hello, world!'
+    
+
+  render() {
+    return (
+     //<Provider store={store}>
+      <BrowserRouter>
+        <div className="App">
+          <Navbar />
+          <Route exact path='/' component={Home} />
+          <Route path='/register' component={Register} />
+        </div>
+      </BrowserRouter>
+    //</Provider>
+      
+    );
   }
 }
-// this will generate this
-// <h1 class='greeting'>Hello World!</h1>
 
+export default App;
 
-// move this out later
+// function tick() {
+//     const element = ( <
+//         div >
+//         <
+//         h2 > It is { new Date().toLocaleTimeString() }. < /h2>  <
+//         /div > );
 
+//         ReactDOM.render(element, document.getElementById('app'));
+//     }
 
-function showTime() {
-  const e = (
-    <div>
-      <h1> Time: {new Date().toLocaleTimeString()} </h1>
-    </div>
-  )
-  ReactDOM.render(e, document.getElementById('app'))
-}
-
-
-setInterval(showTime, 1000)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//ReactDOM.render(First, document.getElementById("app"));
+//     setInterval(tick, 1000);
